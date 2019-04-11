@@ -1,0 +1,51 @@
+var bubbles = [];
+
+function setup() {
+  createCanvas(400, 400);
+  for(var i = 0; i < 5; i++){
+    bubbles[i] = new Bubble(random(width),random(height),15);
+  }
+}
+
+function draw() {
+  background(220);
+ for(var i = 0; i < bubbles.length; i++ ){
+   for(var j = 0; j < bubbles.length; j++){
+     if(i!= j && bubbles[i].intersect(bubbles[j])){
+       background(0);
+     }
+     
+   }
+ }
+
+for (var b of bubbles){
+  b.show();
+  b.move();
+  
+}
+}
+-------------------------------------------------------------------------------------------------------------------------
+class Bubble {
+  constructor(x, y, r) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+  }
+  show() {
+    fill(0, 255, 255, 11);
+    ellipse(this.x, this.y, 2 * this.r, 2 * this.r);
+  }
+  move() {
+    this.x = this.x + random(-1, 1);
+    this.y = this.y + random(-1, 1);
+  }
+  intersect(other) {
+    var dmin = this.r + other.r;
+    var d = dist(this.x, this.y, other.x, other.y);
+    if (d < dmin) {
+      return true;
+    } else {
+      return false
+    }
+  }
+}
